@@ -2,6 +2,7 @@
 Practice scripts implementing various _Python constructs_.
 
 To name but a few:
+
 1. _Encapsulation_
 
 2. _Inheritance_
