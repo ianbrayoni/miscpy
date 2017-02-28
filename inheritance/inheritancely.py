@@ -13,18 +13,22 @@ class WriteFile(object):
     def __init__(self, writer, filename):
         self.writer = writer
         self.filename = filename
+        self.value = 0
+
+    def set_val(self, value):
+        self.value = value
+
+    def get_val(self):
+        return self.value
 
     @abc.abstractmethod
     def write(self):
         with open(self.filename, 'w'):
-            self.writer.write()
+            self.writer.write(self.value)
         return
 
 
 class CSVFormatter(WriteFile):
-
-    def __init__(self):
-        pass
 
     def write(self):
         pass
@@ -32,12 +36,10 @@ class CSVFormatter(WriteFile):
 
 class LogFormatter(WriteFile):
 
-    def __init__(self):
-        pass
-
     @staticmethod
     def date_formatter():
         return datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
 
     def write(self):
-        pass
+        self.value = self.date_formatter() + '  ' + self.value + '\n'
+        return super(LogFormatter, self).write(self.value)
