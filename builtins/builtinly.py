@@ -55,11 +55,12 @@ class ConfigDict(dict):
 
     def __init__(self, filename):
         self._filename = filename
-        if not os.path.isfile(self._filename):
-            try:
-                open(self._filename, 'w').close()
-            except IOError:
-                raise IOError('arg to ConfigDict must be a valid pathname')
+
+        try:
+            open(self._filename, 'w').close()
+        except IOError:
+            raise IOError('arg to ConfigDict must be a valid pathname')
+
         with open(self._filename) as file_handler:
             for line in file_handler:
                 line = line.rstrip()
