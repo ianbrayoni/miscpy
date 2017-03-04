@@ -3,33 +3,29 @@
 """
 Write to a config file by overriding the `dict` builtin
 """
+import os
 
 
 class ConfigDict(dict):
 
     def __init__(self, filename):
-        self.filename = filename
+        self._filename = filename
+        if os.path.isfile(self._filename):
+            with open(self._filename) as file_handler:
+                for line in file_handler:
+                    line = line.rstrip()
+                    key, value = line.split('=', 1)
+                    dict.__setitem__(self, key, value)
 
     def __setitem__(self, key, value):
-        return dict.__setitem__(self, key, value)
+        dict.__setitem__(self, key, value)
+        with open(self._filename, 'w') as file_handler:
+            for key, value in self.items():
+                file_handler.write('{0} = {1}\n'.format(key, value))
 
-    def write(self):
-        file_obj = open(self.filename, 'a')
-        for self.key in self.keys():
-            file_obj.write('{0} = {1}\n'.format(self.key, cc[self.key]))
-        file_obj.close()
-
-    def read(self):
-        file_obj = open(self.filename, 'r')
-        for line in file_obj:
-            print(line)
-        file_obj.close()
 
 if __name__ == "__main__":
     cc = ConfigDict('app.cfg')
 
     cc['database'] = 'PostgreSQL'
     cc['cache'] = 'Redis'
-
-    cc.write()
-    cc.read()
