@@ -9,7 +9,7 @@
 """
 
 import sys
-from .builtinly import ConfigDict
+from builtinly import ConfigDict
 
 app_conf = ConfigDict('app.cfg')
 
