@@ -24,8 +24,8 @@ if len(sys.argv) == 3:
 elif len(sys.argv) == 2:
     print("Reading a value:")
     key = sys.argv[1]
-    print('The value for {0} is {1}'.format(sys.argv[1], app_conf.get(key)))
+    print('The value for {0} is {1}'.format(sys.argv[1], app_conf[key]))
 else:
     print("Keys/Values:")
     for key in app_conf.keys():
-        print("   {0} = {1}".format(key, app_conf.get(key)))
+        print("   {0} = {1}".format(key, app_conf[key]))

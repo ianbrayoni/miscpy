@@ -33,6 +33,10 @@ import os
 
 
 class ConfigKeyError(Exception):
+    """
+    Custom Error and Exception handling class
+    """
+
     def __init__(self, this, key):
         self.key = key
         self.keys = this.keys()
@@ -45,6 +49,9 @@ class ConfigKeyError(Exception):
 
 
 class ConfigDict(dict):
+    """
+    Class implementing interface to a configuration file.
+    """
 
     def __init__(self, filename):
         self._filename = filename
