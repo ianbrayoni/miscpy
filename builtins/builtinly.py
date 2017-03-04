@@ -29,7 +29,6 @@ Our config file should looks like this:
     num_retries=5
 
 """
-import os
 
 
 class ConfigKeyError(Exception):
