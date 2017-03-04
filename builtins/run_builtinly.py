@@ -4,6 +4,9 @@
     Usages:
     ./run_builtinly.py                          (reads out the entire config
                                                 dict)
+    ./run_builtinly.py  that_key                (reads out the value associated
+                                                with a particular key from
+                                                the config dict)
     ./run_builtinly.py  this_key this_value    (sets this_key and this_value
                                                 in the dict)
 """
@@ -18,8 +21,11 @@ if len(sys.argv) == 3:
     value = sys.argv[2]
     print("Writing data: {0} {1}".format(key, value))
     app_conf[key] = value
-
+elif len(sys.argv) == 2:
+    print("Reading a value:")
+    key = sys.argv[1]
+    print('The value for {0} is {1}'.format(sys.argv[1], app_conf.get(key)))
 else:
-    print("Reading data:")
+    print("Keys/Values:")
     for key in app_conf.keys():
-        print("   {0} = {1}".format(key, app_conf[key]))
+        print("   {0} = {1}".format(key, app_conf.get(key)))

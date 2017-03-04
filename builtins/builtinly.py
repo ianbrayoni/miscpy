@@ -32,26 +32,42 @@ Our config file should looks like this:
 import os
 
 
+class ConfigKeyError(Exception):
+    def __init__(self, this, key):
+        self.key = key
+        self.keys = this.keys()
+
+    def __str__(self):
+        return "Key '{0}' not found. Available keys: ({1})".format(
+            self.key,
+            ', '.join(self.keys)
+        )
+
+
 class ConfigDict(dict):
 
     def __init__(self, filename):
         self._filename = filename
-        if os.path.isfile(self._filename):
-            with open(self._filename) as file_handler:
-                for line in file_handler:
-                    line = line.rstrip()
-                    key, value = line.split('=', 1)
-                    dict.__setitem__(self, key, value)
+        if not os.path.isfile(self._filename):
+            try:
+                open(self._filename, 'w').close()
+            except IOError:
+                raise IOError('arg to ConfigDict must be a valid pathname')
+        with open(self._filename) as file_handler:
+            for line in file_handler:
+                line = line.rstrip()
+                key, value = line.split('=', 1)
+                dict.__setitem__(self, key, value)
+
+    def __getitem__(self, key):
+        if key not in self:
+            raise ConfigKeyError(self, key)
+        return dict.__getitem__(self, key)
 
     def __setitem__(self, key, value):
         dict.__setitem__(self, key, value)
         with open(self._filename, 'w') as file_handler:
             for key, value in self.items():
-                file_handler.write('{0} = {1}\n'.format(key, value))
+                file_handler.write('{0}={1}\n'.format(key, value))
 
 
-if __name__ == "__main__":
-    cc = ConfigDict('app.cfg')
-
-    cc['database'] = 'PostgreSQL'
-    cc['cache'] = 'Redis'
