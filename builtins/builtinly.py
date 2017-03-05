@@ -29,6 +29,9 @@ Our config file should looks like this:
     num_retries=5
 
 """
+import os
+
+config_directory = '/Users/brayoni/Sandbox/Python/configs/'
 
 
 class ConfigKeyError(Exception):
@@ -54,13 +57,14 @@ class ConfigDict(dict):
 
     def __init__(self, filename):
         self._filename = filename
+        self._file_path = os.path.join(config_directory, self._filename)
 
         try:
-            open(self._filename, 'w').close()
+            open(self._file_path, 'w').close()
         except IOError:
             raise IOError('arg to ConfigDict must be a valid pathname')
 
-        with open(self._filename) as file_handler:
+        with open(self._file_path) as file_handler:
             for line in file_handler:
                 line = line.rstrip()
                 key, value = line.split('=', 1)
@@ -73,7 +77,7 @@ class ConfigDict(dict):
 
     def __setitem__(self, key, value):
         dict.__setitem__(self, key, value)
-        with open(self._filename, 'w') as file_handler:
+        with open(self._file_path, 'w') as file_handler:
             for key, value in self.items():
                 file_handler.write('{0}={1}\n'.format(key, value))
 
