@@ -61,7 +61,7 @@ class ConfigDict(dict):
                                       pickle_name + '.pickle')
 
         if not os.path.isfile(self._filename):
-            with open(self._filename, 'w') as file_handler:
+            with open(self._filename, 'wb') as file_handler:
                 pickle.dump({}, file_handler)
 
         try:
@@ -69,7 +69,7 @@ class ConfigDict(dict):
         except IOError:
             raise IOError('arg to ConfigDict must be a valid pathname')
 
-        with open(self._filename) as file_handler:
+        with open(self._filename, 'rb') as file_handler:
             pickled_obj = pickle.load(file_handler)
             self.update(pickled_obj)
 
@@ -80,7 +80,7 @@ class ConfigDict(dict):
 
     def __setitem__(self, key, value):
         dict.__setitem__(self, key, value)
-        with open(self._filename, 'w') as file_handler:
+        with open(self._filename, 'wb') as file_handler:
             pickle.dump(self, file_handler)
 
 
