@@ -30,6 +30,7 @@ Our config file should looks like this:
 
 """
 import os
+import pickle
 
 config_directory = '/Users/brayoni/Sandbox/Python/configs/'
 
@@ -55,20 +56,22 @@ class ConfigDict(dict):
     Class implementing interface to a configuration file.
     """
 
-    def __init__(self, filename):
-        self._filename = filename
-        self._file_path = os.path.join(config_directory, self._filename)
+    def __init__(self, pickle_name):
+        self._filename = os.path.join(config_directory,
+                                      pickle_name + '.pickle')
+
+        if not os.path.isfile(self._filename):
+            with open(self._filename, 'w') as file_handler:
+                pickle.dump({}, file_handler)
 
         try:
-            open(self._file_path, 'w').close()
+            open(self._filename).close()
         except IOError:
             raise IOError('arg to ConfigDict must be a valid pathname')
 
-        with open(self._file_path) as file_handler:
-            for line in file_handler:
-                line = line.rstrip()
-                key, value = line.split('=', 1)
-                dict.__setitem__(self, key, value)
+        with open(self._filename) as file_handler:
+            pickled_obj = pickle.load(file_handler)
+            self.update(pickled_obj)
 
     def __getitem__(self, key):
         if key not in self:
@@ -77,8 +80,9 @@ class ConfigDict(dict):
 
     def __setitem__(self, key, value):
         dict.__setitem__(self, key, value)
-        with open(self._file_path, 'w') as file_handler:
-            for key, value in self.items():
-                file_handler.write('{0}={1}\n'.format(key, value))
+        with open(self._filename, 'w') as file_handler:
+            pickle.dump(self, file_handler)
+
+
 
 

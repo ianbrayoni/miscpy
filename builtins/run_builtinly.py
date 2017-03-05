@@ -14,7 +14,7 @@
 import sys
 from builtinly import ConfigDict
 
-app_conf = ConfigDict('app.cfg')
+app_conf = ConfigDict('app')
 
 if len(sys.argv) == 3:
     key = sys.argv[1]
