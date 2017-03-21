@@ -17,7 +17,7 @@ We are given a list of restaurants that contains:
 Write a function that has three parameters:
 
 1. a restaurant file that is open for reading,
-2. the price range (one of $, $$, $$$ and $$$$), and
+2. the price range (one of _$_, _$$_, _$$$_ and _$$$$_), and
 3. a list of cuisines.
 
 _The function returns a list of restaurants (in that price range, serving at least one of those cuisines), and their ratings sorted from highest to lowest._
