@@ -80,7 +80,7 @@ def build_rating_list(name_to_rating, names_final):
      'Dumplings R Us': 71,
      'Mexican Grill': 85,
      'Deep Fried Everything': 52}
-    >>> names = ['Queen St. Cafe', 'Dumplings R Us']
+    >>> names = ['Dumplings R Us', 'Queen St. Cafe']
     [[82, 'Queen St. Cafe'], [71, 'Dumplings R Us']]
     """
 
@@ -88,7 +88,7 @@ def filter_by_cuisine(names_matching_price, cuisine_to_names, cuisines_list):
     """ (list of str, dict of {str: list of str}, list of str) -> list of str
 
     >>> names = ['Queen St. Cafe', 'Dumplings R Us', 'Deep Fried Everything']
-    >>> cuis = 'Canadian': ['Georgie Porgie'],
+    >>> cuis = {'Canadian': ['Georgie Porgie'],
      'Pub Food': ['Georgie Porgie', 'Deep Fried Everything'],
      'Malaysian': ['Queen St. Cafe'],
      'Thai': ['Queen St. Cafe'],
@@ -96,8 +96,16 @@ def filter_by_cuisine(names_matching_price, cuisine_to_names, cuisines_list):
      'Mexican': ['Mexican Grill']}
     >>> cuisines = ['Chinese', 'Thai']
     >>> filter_by_cuisine(names, cuis, cuisines)
-    ['Queen St. Cafe', 'Dumplings R Us']
+    ['Dumplings R Us', 'Queen St. Cafe']
     """
+    list_of_interest = []
+
+    for cuisine in cuisines_list:
+        for restaurant in cuisine_to_names[cuisine]:
+            if restaurant in names_matching_price:
+                list_of_interest.append(restaurant)
+
+    return list_of_interest
 
 def read_restaurants(file):
     """ (file) -> (dict, dict, dict)
@@ -168,17 +176,28 @@ def read_restaurants(file):
             tmp_lst = lst[3].split(',')
 
             for cuisine in tmp_lst:
+
                 if cuisine in cuisine_to_names.keys():
                     cuisine_to_names[cuisine].append(lst[0])
+
                 cuisine_to_names[cuisine] = [lst[0]]
+
         elif lst[3] in cuisine_to_names.keys():
             cuisine_to_names[lst[3]].append(lst[0])
+
         else:
             cuisine_to_names[lst[3]] = [lst[0]]
 
     return name_to_rating, price_to_names, cuisine_to_names
 
 
-read_restaurants(FILENAME)
+filter_by_cuisine(names_matching_price = ['Queen St. Cafe', 'Dumplings R Us', 'Deep Fried Everything'],
+                  cuisine_to_names = {'Canadian': ['Georgie Porgie'],
+     'Pub Food': ['Georgie Porgie', 'Deep Fried Everything'],
+     'Malaysian': ['Queen St. Cafe'],
+     'Thai': ['Queen St. Cafe'],
+     'Chinese': ['Dumplings R Us'],
+     'Mexican': ['Mexican Grill']},
+                  cuisines_list = ['Chinese', 'Thai'])
 
 
