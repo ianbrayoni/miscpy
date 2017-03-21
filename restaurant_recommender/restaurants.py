@@ -205,5 +205,5 @@ def read_restaurants(file):
     return name_to_rating, price_to_names, cuisine_to_names
 
 
-
+# We want a cheap restaurant that offers Chinese and Thai cuisines
 recommend(file=FILENAME, price='$', cuisines_list=['Chinese', 'Thai'])
