@@ -1,6 +1,6 @@
-##The Restaurant Recommendation Problem
+## The Restaurant Recommendation Problem
 
-###Task
+### Task
 
 The problem we'll be tackling is a restaurant recommendation system.
 
@@ -12,7 +12,7 @@ We are given a list of restaurants that contains:
 - The type of food served by the restaurant.
 - The program will make a recommendation to the user based on this data.
 
-###The Problem:
+### The Problem:
 
 Write a function that has three parameters:
 
