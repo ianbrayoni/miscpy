@@ -37,7 +37,7 @@ would produce this list:
 from itertools import groupby
 
 # The file containing the restaurant data.
-FILENAME = '/Users/brayoni/Sandbox/Python/miscpy/restaurant_recommender/restaurants_small.txt'
+FILENAME = 'restaurants_small.txt'
 
 
 def recommend(file, price, cuisines_list):
@@ -61,9 +61,11 @@ def recommend(file, price, cuisines_list):
 
     # Now we have a list of restaurants in the right price range.
     # Need a new list of restaurants that serve one of the cuisines.
-    names_final = filter_by_cuisine(names_matching_price, cuisine_to_names, cuisines_list)
+    names_final = filter_by_cuisine(names_matching_price, cuisine_to_names,
+                                    cuisines_list)
 
-    # Now we have a list of restaurants that are in the right price range and serve the requested cuisine.
+    # Now we have a list of restaurants that are in the right price range and
+    #  serve the requested cuisine.
     # Need to look at ratings and sort this list.
     result = build_rating_list(name_to_rating, names_final)
 
