@@ -34,8 +34,10 @@ would produce this list:
     [[82, 'Queen St. Cafe'], [71, 'Dumplings R Us']]
 """
 
+from itertools import groupby
+
 # The file containing the restaurant data.
-FILENAME = 'restaurants_small.txt'
+FILENAME = '/Users/brayoni/Sandbox/Python/miscpy/restaurant_recommender/restaurants_small.txt'
 
 
 def recommend(file, price, cuisines_list):
@@ -110,3 +112,47 @@ def read_restaurants(file):
     name_to_rating = {}
     price_to_names = {'$': [], '$$': [], '$$$': [], '$$$$': []}
     cuisine_to_names = {}
+
+    with open(file, 'r') as f:
+        # read file object as list
+        # ['Georgie Porgie', '87%', '$$$', 'Canadian,Pub Food', '', 'Queen St. Cafe', '82%', '$', 'Malaysian,Thai', '', 'Dumplings R Us', '71%', '$', 'Chinese', '', 'Mexican Grill', '85%', '$$', 'Mexican', '', 'Deep Fried Everything', '52%', '$', 'Pub Food']
+        restaurant_list_obj = f.read().splitlines()
+
+    # create a list of lists for individual restaurant profiles
+    # grouped on empty string element
+    restaurant_profiles = \
+        [list(group) for k,
+                         group in groupby(restaurant_list_obj,
+                                          lambda x: x == "") if not k]
+
+    # [['Georgie Porgie', '87%', '$$$', 'Canadian,Pub Food'],
+    #  ['Queen St. Cafe', '82%', '$', 'Malaysian,Thai'],
+    #  ['Dumplings R Us', '71%', '$', 'Chinese'],
+    #  ['Mexican Grill', '85%', '$$', 'Mexican'],
+    #  ['Deep Fried Everything', '52%', '$', 'Pub Food']]
+
+    for lst in restaurant_profiles:
+        # update name_to_rating dict with name and rating
+        # rating% converted from str '85%' to int 85
+        name_to_rating.update({lst[0] : int(lst[1].strip('%'))})
+
+        # populate price_to_names
+        for key in price_to_names.keys():
+            if lst[2] == key:
+                price_to_names[key].append(lst[0])
+
+        # populate cuisine_to_names
+        # check if element values are comma separated and treat accordingly
+        if ',' in lst[3]:
+            tmp_lst = lst[3].split(',')
+            for cuisine in tmp_lst:
+                cuisine_to_names.update({cuisine : lst[0]})
+        else:
+            cuisine_to_names.update({lst[3] : lst[0]})
+
+    print(name_to_rating, price_to_names, cuisine_to_names)
+
+
+read_restaurants(FILENAME)
+
+
