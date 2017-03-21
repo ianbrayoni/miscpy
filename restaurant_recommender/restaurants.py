@@ -118,12 +118,12 @@ def read_restaurants(file):
     '$$$$': [], 
     '$$$': ['Georgie Porgie'], 
     '$': ['Queen St. Cafe', 'Dumplings R Us', 'Deep Fried Everything']},
-    {'Chinese': 'Dumplings R Us', 
-    'Thai': 'Queen St. Cafe', 
-    'Mexican': 'Mexican Grill', 
-    'Canadian': 'Georgie Porgie', 
-    'Malaysian': 'Queen St. Cafe', 
-    'Pub Food': 'Deep Fried Everything'})
+    {'Canadian': ['Georgie Porgie'], 
+    'Mexican': ['Mexican Grill'], 
+    'Pub Food': ['Georgie Porgie', 'Deep Fried Everything'], 
+    'Malaysian': ['Queen St. Cafe'], 
+    'Thai': ['Queen St. Cafe'], 
+    'Chinese': ['Dumplings R Us']})
     """
 
     name_to_rating = {}
@@ -166,10 +166,15 @@ def read_restaurants(file):
         # check if element values are comma separated and treat accordingly
         if ',' in lst[3]:
             tmp_lst = lst[3].split(',')
+
             for cuisine in tmp_lst:
-                cuisine_to_names.update({cuisine : lst[0]})
+                if cuisine in cuisine_to_names.keys():
+                    cuisine_to_names[cuisine].append(lst[0])
+                cuisine_to_names[cuisine] = [lst[0]]
+        elif lst[3] in cuisine_to_names.keys():
+            cuisine_to_names[lst[3]].append(lst[0])
         else:
-            cuisine_to_names.update({lst[3] : lst[0]})
+            cuisine_to_names[lst[3]] = [lst[0]]
 
     return name_to_rating, price_to_names, cuisine_to_names
 
