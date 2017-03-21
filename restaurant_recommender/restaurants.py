@@ -37,7 +37,7 @@ would produce this list:
 from itertools import groupby
 
 # The file containing the restaurant data.
-FILENAME = 'restaurants_small.txt'
+FILENAME = 'restaurant_recommender/restaurants_small.txt'
 
 
 def recommend(file, price, cuisines_list):
@@ -68,6 +68,9 @@ def recommend(file, price, cuisines_list):
     #  serve the requested cuisine.
     # Need to look at ratings and sort this list.
     result = build_rating_list(name_to_rating, names_final)
+
+    # display sorted list
+    print(result)
 
     # We're done!  Return that sorted list.
     return result
@@ -203,3 +206,4 @@ def read_restaurants(file):
 
 
 
+recommend(file=FILENAME, price='$', cuisines_list=['Chinese', 'Thai'])
