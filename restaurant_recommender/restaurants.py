@@ -107,6 +107,23 @@ def read_restaurants(file):
     - a dict of {restaurant name: rating%}
     - a dict of {price: list of restaurant names}
     - a dict of {cusine: list of restaurant names}
+    
+    >>>read_restaurants(FILENAME)
+    ({'Deep Fried Everything': 52, 
+     'Mexican Grill': 85,
+     'Dumplings R Us': 71, 
+     'Georgie Porgie': 87, 
+     'Queen St. Cafe': 82},
+    {'$$': ['Mexican Grill'], 
+    '$$$$': [], 
+    '$$$': ['Georgie Porgie'], 
+    '$': ['Queen St. Cafe', 'Dumplings R Us', 'Deep Fried Everything']},
+    {'Chinese': 'Dumplings R Us', 
+    'Thai': 'Queen St. Cafe', 
+    'Mexican': 'Mexican Grill', 
+    'Canadian': 'Georgie Porgie', 
+    'Malaysian': 'Queen St. Cafe', 
+    'Pub Food': 'Deep Fried Everything'})
     """
 
     name_to_rating = {}
@@ -154,7 +171,7 @@ def read_restaurants(file):
         else:
             cuisine_to_names.update({lst[3] : lst[0]})
 
-    return (name_to_rating, price_to_names, cuisine_to_names)
+    return name_to_rating, price_to_names, cuisine_to_names
 
 
 read_restaurants(FILENAME)
