@@ -115,7 +115,11 @@ def read_restaurants(file):
 
     with open(file, 'r') as f:
         # read file object as list
-        # ['Georgie Porgie', '87%', '$$$', 'Canadian,Pub Food', '', 'Queen St. Cafe', '82%', '$', 'Malaysian,Thai', '', 'Dumplings R Us', '71%', '$', 'Chinese', '', 'Mexican Grill', '85%', '$$', 'Mexican', '', 'Deep Fried Everything', '52%', '$', 'Pub Food']
+        # ['Georgie Porgie', '87%', '$$$', 'Canadian,Pub Food', '',
+        #  'Queen St. Cafe', '82%', '$', 'Malaysian,Thai', '',
+        # 'Dumplings R Us', '71%', '$', 'Chinese', '',
+        # 'Mexican Grill', '85%', '$$', 'Mexican', '',
+        # 'Deep Fried Everything', '52%', '$', 'Pub Food']
         restaurant_list_obj = f.read().splitlines()
 
     # create a list of lists for individual restaurant profiles
@@ -133,7 +137,7 @@ def read_restaurants(file):
 
     for lst in restaurant_profiles:
         # update name_to_rating dict with name and rating
-        # rating% converted from str '85%' to int 85
+        # rating% converted from str '85%' to int i.e. 85
         name_to_rating.update({lst[0] : int(lst[1].strip('%'))})
 
         # populate price_to_names
@@ -150,7 +154,7 @@ def read_restaurants(file):
         else:
             cuisine_to_names.update({lst[3] : lst[0]})
 
-    print(name_to_rating, price_to_names, cuisine_to_names)
+    return (name_to_rating, price_to_names, cuisine_to_names)
 
 
 read_restaurants(FILENAME)
