@@ -1,10 +1,12 @@
 """
 Strategy Design Pattern
 Ref: https://youtu.be/v9ejT8FO-7I
+    https://medium.com/@sheikhsajid/design-patterns-in-python-part-1-the-strategy-pattern-54b24897233e
 """
 import abc
 
 
+# Interfaces
 class QuackStrategyAbstract(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def quack(self):
@@ -26,6 +28,7 @@ class DisplayStrategyAbstract(metaclass=abc.ABCMeta):
         to use this base class')
 
 
+# Strategies
 @QuackStrategyAbstract.register
 class SimpleQuackStrategy(object):
     def quack(self):
@@ -68,7 +71,7 @@ class DisplaySpanishStrategy(object):
         print("Este es un pato robot!")
 
 
-# available strategies
+# Instantiate strategies
 simple_quack = SimpleQuackStrategy()
 no_quack = NoQuackStrategy()
 
@@ -80,7 +83,7 @@ displayed_english = DisplayEnglishStrategy()
 displayed_spanish = DisplaySpanishStrategy()
 
 
-# client - Duck
+# Define interface of interest to clients
 class Duck(object):
     """
     Defines the interface of interest to clients -
@@ -103,7 +106,7 @@ class Duck(object):
         self._display_strategy.display()
 
 
-# Types of ducks
+# Define clients - Types of ducks
 
 # MellowDuck - SimpleQuack, SimplyFly, DisplayEnglish
 class MellowDuck(Duck):
