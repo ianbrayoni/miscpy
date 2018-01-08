@@ -132,13 +132,13 @@ class RobotDuck(Duck):
 
 
 if __name__ == '__main__':
-    print("Mello Duck:")
+    print("Mellow Duck:")
     mellow = MellowDuck()
     mellow.quack()
     mellow.fly()
     mellow.display()
 
-    print("\nJello Duck:")
+    print("\nJellow Duck:")
 
     jellow = JellowDuck()
     jellow.quack()
