@@ -113,22 +113,22 @@ class Duck(object):
 # MellowDuck - SimpleQuack, SimplyFly, DisplayEnglish
 class MellowDuck(Duck):
     def __init__(self):
-        super(MellowDuck, self).__init__("Jack",
-            simple_quack, simple_fly, displayed_english)
+        super(MellowDuck, self).__init__(
+            "Jack", simple_quack, simple_fly, displayed_english)
 
 
 # JellowDuck - SimpleQuack, JetFly, DisplayEnglish
 class JellowDuck(Duck):
     def __init__(self):
-        super(JellowDuck, self).__init__("James",
-            simple_quack, jet_fly, displayed_english)
+        super(JellowDuck, self).__init__(
+            "James", simple_quack, jet_fly, displayed_english)
 
 
 # RobotDuck - NoQuack, NoFly, DisplaySpanish
 class RobotDuck(Duck):
     def __init__(self):
-        super(RobotDuck, self).__init__("Salvador",
-            no_quack, no_fly, displayed_spanish)
+        super(RobotDuck, self).__init__(
+            "Salvador", no_quack, no_fly, displayed_spanish)
 
 
 if __name__ == '__main__':
