@@ -17,7 +17,7 @@ class QuackStrategyAbstract(metaclass=abc.ABCMeta):
 
 class FlyStrategyAbstract(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def display(self):
+    def fly(self):
         raise NotImplementedError('Users must define a fly method \
         to use this base class')
 
