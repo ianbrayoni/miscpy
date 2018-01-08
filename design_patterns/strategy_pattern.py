@@ -1,7 +1,8 @@
 """
 Strategy Design Pattern
 Ref: https://youtu.be/v9ejT8FO-7I
-    https://medium.com/@sheikhsajid/design-patterns-in-python-part-1-the-strategy-pattern-54b24897233e
+     https://medium.com/@sheikhsajid/design-patterns-in-python-part-1-the-strategy-pattern-54b24897233e
+     https://sourcemaking.com/design_patterns/strategy/python/1
 """
 import abc
 
@@ -23,12 +24,12 @@ class FlyStrategyAbstract(metaclass=abc.ABCMeta):
 
 class DisplayStrategyAbstract(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def display(self):
+    def display(self, name):
         raise NotImplementedError('Users must define a display method \
         to use this base class')
 
 
-# Strategies
+# Concrete classes
 @QuackStrategyAbstract.register
 class SimpleQuackStrategy(object):
     def quack(self):
@@ -61,14 +62,14 @@ class NoFlyStrategy(object):
 
 @DisplayStrategyAbstract.register
 class DisplayEnglishStrategy(object):
-    def display(self):
-        print("This is a duck!")
+    def display(self, name):
+        print("{} is a duck!".format(name))
 
 
 @DisplayStrategyAbstract.register
 class DisplaySpanishStrategy(object):
-    def display(self):
-        print("Este es un pato robot!")
+    def display(self, name):
+        print("{} es un pato robot!".format(name))
 
 
 # Instantiate strategies
@@ -91,7 +92,8 @@ class Duck(object):
     Maintains reference to strategy objects.
     """
 
-    def __init__(self, quack_strategy, fly_strategy, display_strategy):
+    def __init__(self, name, quack_strategy, fly_strategy, display_strategy):
+        self._name = name
         self._quack_strategy = quack_strategy
         self._fly_strategy = fly_strategy
         self._display_strategy = display_strategy
@@ -103,7 +105,7 @@ class Duck(object):
         self._fly_strategy.fly()
 
     def display(self):
-        self._display_strategy.display()
+        self._display_strategy.display(self._name)
 
 
 # Define clients - Types of ducks
@@ -111,21 +113,21 @@ class Duck(object):
 # MellowDuck - SimpleQuack, SimplyFly, DisplayEnglish
 class MellowDuck(Duck):
     def __init__(self):
-        super(MellowDuck, self).__init__(
+        super(MellowDuck, self).__init__("Jack",
             simple_quack, simple_fly, displayed_english)
 
 
 # JellowDuck - SimpleQuack, JetFly, DisplayEnglish
 class JellowDuck(Duck):
     def __init__(self):
-        super(JellowDuck, self).__init__(
+        super(JellowDuck, self).__init__("James",
             simple_quack, jet_fly, displayed_english)
 
 
 # RobotDuck - NoQuack, NoFly, DisplaySpanish
 class RobotDuck(Duck):
     def __init__(self):
-        super(RobotDuck, self).__init__(
+        super(RobotDuck, self).__init__("Salvador",
             no_quack, no_fly, displayed_spanish)
 
 
